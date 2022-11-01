@@ -62,19 +62,22 @@ public class BruteController : MonoBehaviour
         //throw
         if (Input.GetKeyDown(KeyCode.T))
         {
-            animator.SetTrigger("Throw");
-            ft.ThrowFrisbee();
-            animator.SetBool("Holding Item", false);
+            if (animator.GetBool("Holding Item"))
+            {
+                animator.SetBool("Throw",true);
+                ft.ThrowFrisbee();
+                animator.SetBool("Holding Item", false);
+                animator.SetBool("Throw", false);
+            }           
         }
 
         transform.Rotate(0, Input.GetAxis("Horizontal") * turnSpeed, 0);
 
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         float speed = moveSpeed * Input.GetAxis("Vertical");
-       
+
         controller.SimpleMove(forward * speed * runSpeed);
 
         animator.SetFloat("Speed", speed);
-        
     }
 }
